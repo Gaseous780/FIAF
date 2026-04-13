@@ -40,7 +40,12 @@ public class PlayerController : MonoBehaviour
 
             if (Physics.Raycast(ray, out raycast))
             {
-                Debug.Log(raycast.collider.gameObject);
+                GameObject objectRaycast = raycast.collider.gameObject;
+
+                if (objectRaycast.CompareTag("Door") == true)
+                {
+                    objectRaycast.GetComponent<DoorBehaviour>().InteractDoor();
+                }
             }
         }
     }
