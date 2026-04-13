@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "name": "PlayerInputs",
+    "maps": [
+        {
+            "name": "MouseControls",
+            "id": "179431db-67ff-4509-8df8-19a4e8f76449",
+            "actions": [
+                {
+                    "name": "ClickEvent",
+                    "type": "Button",
+                    "id": "b41b3758-e186-4cd2-a49c-b489b029581e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MovementMouse",
+                    "type": "Value",
+                    "id": "286b1a8e-2293-43ea-ab8f-0cc04f526484",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c7b13fe8-2940-4999-b0cd-68936be5d721",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClickEvent",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2023d298-183a-4c32-a950-2dcf2a90b63e",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MovementMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
