@@ -7,6 +7,9 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected int speed;
     [SerializeField] protected int mode;
 
+    protected bool isWaiting;
+    [SerializeField] protected float timeWait;
+
     protected SteeringBehaviours steering;
 
     protected LineOfSightBehaviour LOS;
@@ -34,7 +37,7 @@ public abstract class EnemyBase : MonoBehaviour
 
         context = new EnemyContext { _isOn = true, _LOS = LOS, _selfTransform = transform, _returnToOrigin = false};
 
-        tree = GetComponent<EnemyTree>();
+        tree = new EnemyTree ();
         tree.InitializeNodes();
     }
 
@@ -93,9 +96,20 @@ public abstract class EnemyBase : MonoBehaviour
 
     public virtual void ReturnToOrigin() { }
 
-    public virtual IEnumerator Wait() {
-        Debug.Log("waiting");
-        yield return null; }
+    public virtual void StartWait()
+    {
+        if (isWaiting == false)
+        {
+            StartCoroutine(Wait());
+        }
+    }
+
+    public virtual IEnumerator Wait() 
+    {
+        isWaiting = true;
+        yield return new WaitForSeconds (timeWait); 
+        isWaiting = false;
+    }
 
 
 }

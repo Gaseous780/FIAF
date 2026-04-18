@@ -23,6 +23,11 @@ public class Tron : EnemyBase
         base.Iddle();
     }
 
+    public override void StartWait()
+    {
+        base.StartWait();
+    }
+
     public override IEnumerator Wait()
     {
         return base.Wait();

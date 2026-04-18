@@ -1,7 +1,6 @@
 using System;
-using UnityEngine;
 
-public class EnemyTree : MonoBehaviour
+public class EnemyTree
 {
     private DecisionNode rootNode;
     private DecisionNode moveOrWaitNode;
@@ -12,7 +11,7 @@ public class EnemyTree : MonoBehaviour
         ActionNode iddleNode = new ActionNode(EnemyAction => EnemyAction.Iddle());
         ActionNode ReturnNode = new ActionNode(EnemyAction => EnemyAction.ReturnToOrigin());
         ActionNode MoveNode = new ActionNode(EnemyAction => EnemyAction.Move());
-        ActionNode WaitNode = new ActionNode(EnemyAction => StartCoroutine(EnemyAction.Wait()));
+        ActionNode WaitNode = new ActionNode(EnemyAction => EnemyAction.StartWait());
 
 
         moveOrWaitNode = new QuestionNode(context => !context._LOS.IsOnFront(context._selfTransform), MoveNode, WaitNode);
