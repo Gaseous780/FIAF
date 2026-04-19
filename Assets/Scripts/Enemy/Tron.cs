@@ -33,8 +33,8 @@ public class Tron : EnemyBase
         return base.Wait();
     }
 
-    public override void ReturnToOrigin()
+    public override void ReturnToPositionOrigin()
     {
-        base.ReturnToOrigin();
+        base.ReturnToPositionOrigin();
     }
 }

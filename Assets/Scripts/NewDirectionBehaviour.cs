@@ -12,7 +12,6 @@ public class NewDirectionBehaviour : MonoBehaviour
         if (other.CompareTag("Enemy") == true)
         {
             other.GetComponent<EnemyBase>().NewDirection(newPosition[0], newDirection[0]);
-            Debug.Log("Bondiola");
         }
     }
 }

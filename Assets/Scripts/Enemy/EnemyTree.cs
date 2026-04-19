@@ -9,7 +9,7 @@ public class EnemyTree
     public void InitializeNodes()
     {
         ActionNode iddleNode = new ActionNode(EnemyAction => EnemyAction.Iddle());
-        ActionNode ReturnNode = new ActionNode(EnemyAction => EnemyAction.ReturnToOrigin());
+        ActionNode ReturnNode = new ActionNode(EnemyAction => EnemyAction.ReturnToPositionOrigin());
         ActionNode MoveNode = new ActionNode(EnemyAction => EnemyAction.Move());
         ActionNode WaitNode = new ActionNode(EnemyAction => EnemyAction.StartWait());
 

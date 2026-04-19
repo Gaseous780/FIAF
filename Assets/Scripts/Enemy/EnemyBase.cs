@@ -18,8 +18,6 @@ public abstract class EnemyBase : MonoBehaviour
     protected EnemyTree tree;
     protected EnemyContext context;
 
-    protected List<Vector3> PositionsWent;
-
     [SerializeField] protected Transform initialPosition;
     [SerializeField] protected Transform positionToGo;
     [SerializeField] protected Transform nextPositionToGo;
@@ -47,13 +45,16 @@ public abstract class EnemyBase : MonoBehaviour
     protected float wanderTime;
     [SerializeField] protected float wanderChangeInterval;
 
+    protected bool isChecking;
+    protected bool nextPointIsReturn;
+
     protected virtual void Awake()
     {
         canChangeDirection = false;
         changeRotation = false;
         rotationProgress = 0;
-
-        DefineInitialGo();
+        isChecking = false;
+        nextPointIsReturn = false;
 
         steering = new SteeringBehaviours();
 
@@ -62,6 +63,8 @@ public abstract class EnemyBase : MonoBehaviour
         LOS = GetComponent<LineOfSightBehaviour>();
 
         context = new EnemyContext { _isOn = true, _LOS = LOS, _selfTransform = transform, _returnToOrigin = false };
+
+        DefineInitialGo();
 
         tree = new EnemyTree();
         tree.InitializeNodes();
@@ -133,8 +136,6 @@ public abstract class EnemyBase : MonoBehaviour
 
     }
 
-    public virtual void ReturnToOrigin() { }
-
     public virtual void StartWait()
     {
         if (isWaiting == false)
@@ -147,6 +148,15 @@ public abstract class EnemyBase : MonoBehaviour
     {
         isWaiting = true;
         yield return new WaitForSeconds(timeWait);
+
+        if (LOS.IsOnFront(context._selfTransform))
+        {
+            InitToReturn();
+            context._returnToOrigin = true;
+
+            yield return null;
+        }
+
         isWaiting = false;
     }
 
@@ -170,11 +180,37 @@ public abstract class EnemyBase : MonoBehaviour
 
     public virtual void ChangeDirection()
     {
-        Debug.Log("mEcAMBIO");
-        positionsWents.Add(positionToGo);
-        positionToGo = nextPositionToGo;
+        isChecking = true;
 
-        rotationsDone.Add(transform.forward);
+        if (nextPointIsReturn == true)
+        {
+            context._isOn = false;
+            return;
+        }
+
+        if (context._returnToOrigin == false)
+        {
+            positionsWents.Add(positionToGo);
+            rotationsDone.Add(actualRotation);
+            positionToGo = nextPositionToGo;
+        }
+        else
+        {
+            positionToGo = nextPositionToGo;
+            actualRotation = -rotationsDone[rotationsDone.Count - 1];
+            positionsWents.RemoveAt(positionsWents.Count - 1);
+            rotationsDone.RemoveAt(rotationsDone.Count - 1);
+            if (positionsWents.Count > 0)
+            {
+                nextPositionToGo = positionsWents[positionsWents.Count - 1];
+            }
+            else
+            {
+                nextPointIsReturn = true;
+                positionToGo = initialPosition;
+            }
+        }
+
         changeRotation = true;
 
         ConvertForwardToDirection(actualRotation);
@@ -183,16 +219,24 @@ public abstract class EnemyBase : MonoBehaviour
 
     public virtual bool ChangeToNewRotation() //El parametro es si tiene que rotar de forma negativa o positiva (falso == negativo, true == positivo)
     {
-        Debug.Log("mEROTO");
         if (transform.forward != actualRotation)
         {
-            transform.forward = Vector3.Lerp(transform.forward, actualRotation, rotationProgress);
-            rotationProgress = Time.deltaTime * rotationSpeed;
+            if (context._returnToOrigin == false)
+            {
+                transform.forward = Vector3.Lerp(transform.forward, actualRotation, rotationProgress);
+            }
+            else
+            {
+                transform.forward = Vector3.Lerp(transform.forward, actualRotation, rotationProgress);
+            }
+
+            rotationProgress += Mathf.Clamp (Time.deltaTime * rotationSpeed, 0, 1);
             return true;
         }
 
         rotationProgress = 0;
         transform.forward = actualRotation;
+        isChecking = false;
         return false;
     }
 
@@ -201,6 +245,7 @@ public abstract class EnemyBase : MonoBehaviour
         int directionToGo = Random.Range(0, initialPositionsToGo.Count);
 
         nextPositionToGo = initialPositionsToGo[directionToGo];
+        positionToGo = nextPositionToGo;
         actualRotation = initialRotations[directionToGo];
 
         ChangeDirection();
@@ -228,39 +273,62 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected void CheckPosition()
     {
-        switch (forwardTo)
+        if (isChecking == false) 
         {
-            case 0:
-                if (transform.position.z <= positionToGo.position.z)
-                {
-                    ChangeDirection();
-                    Debug.Log("meca");
-                }
-                break;
+            switch (forwardTo)
+            {
+                case 0:
+                    if (transform.position.z <= positionToGo.position.z)
+                    {
+                        ChangeDirection();
+                    }
+                    break;
 
-            case 1:
-                if (transform.position.x >= positionToGo.position.x)
-                {
-                    Debug.Log("meca");
-                    ChangeDirection();
-                }
-                break;
+                case 1:
+                    if (transform.position.x >= positionToGo.position.x)
+                    {
+                        ChangeDirection();
+                    }
+                    break;
 
-            case 2:
-                if (transform.position.z >= positionToGo.position.z)
-                {
-                    Debug.Log("meca");
-                    ChangeDirection();
-                }
-                break;
+                case 2:
+                    if (transform.position.z >= positionToGo.position.z)
+                    {
+                        ChangeDirection();
+                    }
+                    break;
 
-            case 3:
-                if (transform.position.x <= positionToGo.position.x)
-                {
-                    Debug.Log("meca");
-                    ChangeDirection();
-                }
-                break;
+                case 3:
+                    if (transform.position.x <= positionToGo.position.x)
+                    {
+                        ChangeDirection();
+                    }
+                    break;
+            } 
+        }
+    }
+
+    protected void InitToReturn()
+    {
+        nextPositionToGo = positionsWents[positionsWents.Count - 1];
+        actualRotation = -rotationsDone[rotationsDone.Count - 1];
+
+        changeRotation = true;
+
+        ConvertForwardToDirection(actualRotation);
+    }
+
+    public virtual void ReturnToPositionOrigin()
+    {
+        if (changeRotation == false)
+        {
+            CheckPosition();
+            transform.position += transform.forward * returningSpeed * Time.deltaTime;
+            //transform.position = Vector3.Lerp(transform.position, positionToGo.position, Time.deltaTime * speed);
+        }
+        else
+        {
+            changeRotation = ChangeToNewRotation();
         }
     }
 }
