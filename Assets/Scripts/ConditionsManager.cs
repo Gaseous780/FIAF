@@ -9,8 +9,14 @@ public class ConditionsManager : MonoBehaviour
 
     [SerializeField] private EnemyManager enemyManager;
 
+    [SerializeField] private CamerasControllers controller;
+
     public void ActivateLose(GameObject enemy)
     {
+        if (controller._camerasOff == false)
+        {
+            controller.BackToWolrd();
+        }
         StartCoroutine(EnableUI());
     }
 

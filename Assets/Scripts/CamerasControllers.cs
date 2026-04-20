@@ -15,6 +15,8 @@ public class CamerasControllers : MonoBehaviour, IPointerEnterHandler
     private UIController uiController;
     private GameObject player;
 
+    public bool _camerasOff => camerasOff;
+
     private void Awake()
     {
         camerasOff = true;
@@ -58,5 +60,16 @@ public class CamerasControllers : MonoBehaviour, IPointerEnterHandler
             player.GetComponent <PlayerBehaviour>()._isOnCameras = false;
             player.GetComponent<PlayerInput>().enabled = true;
         }
+    }
+
+    public void BackToWolrd()
+    {
+        camerasOff = true;
+
+        mainCamera.gameObject.SetActive(true);
+        activeCamera.gameObject.SetActive(false);
+        uiController.ActivateUIOffice();
+        player.GetComponent<PlayerBehaviour>()._isOnCameras = false;
+        player.GetComponent<PlayerInput>().enabled = true;
     }
 }
