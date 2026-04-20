@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnergyBehaviour : MonoBehaviour
+public class EnergyBehaviour
 {
     private float energyMax;
     private float energyMin;
@@ -13,6 +13,7 @@ public class EnergyBehaviour : MonoBehaviour
     private int maxUsesOfEnergy;
 
     public float _currentEnergy => currentEnergy;
+    public int _usesOfEnergy => usesOfEnergy;
 
     public void Init()
     {
@@ -34,11 +35,15 @@ public class EnergyBehaviour : MonoBehaviour
         {
             currentEnergy -= (reductionEnergySpeed * usesOfEnergy) * Time.deltaTime;
         }
+        else
+        {
+            usesOfEnergy = 0;
+        }
     }
 
     public void IncreaseUsesOfEnergy()
     {
-        if (usesOfEnergy <= maxUsesOfEnergy)
+        if (usesOfEnergy < maxUsesOfEnergy)
         {
             usesOfEnergy++;
         }

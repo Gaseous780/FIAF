@@ -29,22 +29,22 @@ public class DoorBehaviour : MonoBehaviour
 
     private void Start()
     {
-        playerEnergy = player.GetComponent<EnergyBehaviour>();
+        playerEnergy = player.GetComponent<PlayerBehaviour>()._energy;
     }
 
     public void InteractDoor()
     {
-        if (playerEnergy._currentEnergy > 0)
+        if (playerEnergy._currentEnergy > 0 && playerEnergy._usesOfEnergy < 4)
         {
             if (isOpenDoor == true)
             {
                 isOpenDoor = false;
-                playerEnergy.DecreaseUsesOfEnergy();
+                playerEnergy.IncreaseUsesOfEnergy();
             }
             else
             {
                 isOpenDoor = true;
-                playerEnergy.IncreaseUsesOfEnergy();
+                playerEnergy.DecreaseUsesOfEnergy();
             }
 
             closeDoor = true;
