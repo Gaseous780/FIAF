@@ -34,9 +34,9 @@ public class DoorBehaviour : MonoBehaviour
 
     public void InteractDoor()
     {
-        if (playerEnergy._currentEnergy > 0 && playerEnergy._usesOfEnergy < 4)
+        if (playerEnergy._currentEnergy > 0)
         {
-            if (isOpenDoor == true)
+            if (isOpenDoor == true && playerEnergy._usesOfEnergy < 4)
             {
                 isOpenDoor = false;
                 playerEnergy.IncreaseUsesOfEnergy();

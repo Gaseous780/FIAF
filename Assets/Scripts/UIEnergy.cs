@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class UIEnergy : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class UIEnergy : MonoBehaviour
 
     void Update()
     {
-        procentage.text = Mathf.Round(energyBehaviour._currentEnergy).ToString();
+        procentage.text = "Energy: " + Mathf.Round(energyBehaviour._currentEnergy).ToString() + "%";
         UpdateBars();
     }
 
