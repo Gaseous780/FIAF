@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour
@@ -12,9 +13,17 @@ public class CameraBehaviour : MonoBehaviour
 
     [SerializeField] private float compensation;
 
+    [SerializeField] private PlayerBehaviour playerBehaviour;
+    [SerializeField] private int cameraSector;
+
     private void Awake()
     {
         OnAxisNegative = false;
+    }
+
+    private void OnEnable()
+    {
+        playerBehaviour._sector = cameraSector;
     }
 
     private void Update()

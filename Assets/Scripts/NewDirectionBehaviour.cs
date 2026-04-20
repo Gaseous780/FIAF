@@ -13,5 +13,9 @@ public class NewDirectionBehaviour : MonoBehaviour
         {
             other.GetComponent<EnemyBase>().NewDirection(newPosition[0], newDirection[0]);
         }
+        else if (other.CompareTag ("Ghost") == true)
+        {
+            other.GetComponent<Ghost>().ReciveNextOnes(newPosition, newDirection);
+        }
     }
 }

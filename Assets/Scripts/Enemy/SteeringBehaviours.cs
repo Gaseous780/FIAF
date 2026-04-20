@@ -16,18 +16,18 @@ public class SteeringBehaviours
         return dir.normalized;
     }
 
-    public Vector3 Arrive (Transform self, Vector3 target, float slowRadius)
+    public float Arrive (Transform self, Vector3 target, float slowRadius)
     {
         Vector3 dir = target - self.position;
         float distance = dir.magnitude;
 
         if (distance < 0.01f)
         {
-            return Vector3.zero;
+            return 0.1f;
         }
 
         float speedFactor = Mathf.Clamp01(distance / slowRadius);
-        return dir.normalized * speedFactor;
+        return speedFactor;
     }
 
     public Vector3 Pursue(Transform self, Transform target, Rigidbody targetRb, float maxPredictionTime)

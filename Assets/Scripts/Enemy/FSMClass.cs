@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FSMClass
 {
-    State currentState { get; set; }
+    private State currentState { get; set; }
 
     private EvadeState evadeState;
     private ArriveState arriveState;
@@ -12,6 +12,8 @@ public class FSMClass
     private int timesSaw;
     private int maxAmountToSeeGhost;
 
+
+    public State _currentState => currentState;
     public int _timesSaw { get { return timesSaw; } set { timesSaw = value; } }
     public int _maxAmountToSeeGhost => maxAmountToSeeGhost;
 
