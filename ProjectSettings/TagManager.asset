@@ -8,6 +8,7 @@ TagManager:
   - Block
   - Enemy
   - Ghost
+  - Daemon
   layers:
   - Default
   - TransparentFX

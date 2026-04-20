@@ -6,6 +6,8 @@ public class EnemyContext
     private Transform playerTransform;
     private bool isOn;
     private bool returnToOrigin;
+    private bool isWander;
+    private bool decisionMoment;
     private LineOfSightBehaviour LOS;
     private Vector3 [] directionToGo;
 
@@ -15,4 +17,6 @@ public class EnemyContext
     public bool _returnToOrigin { get { return returnToOrigin; } set { returnToOrigin = value; } }
     public LineOfSightBehaviour _LOS { get { return LOS; } set { LOS = value; } }
     public Vector3 [] _directionToGo { get { return directionToGo; } set { directionToGo = value; } }
+    public bool _isWander { get { return isWander; } set { isWander = value; } }
+    public bool _decisionMoment {  get { return decisionMoment; } set { decisionMoment = value; } }
 }

@@ -12042,15 +12042,15 @@ GameObject:
   - component: {fileID: 841949467}
   - component: {fileID: 841949466}
   - component: {fileID: 841949472}
-  - component: {fileID: 841949470}
   - component: {fileID: 841949471}
+  - component: {fileID: 841949474}
   m_Layer: 0
-  m_Name: TronRandom
-  m_TagString: Enemy
+  m_Name: Daemon
+  m_TagString: Daemon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &841949466
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12145,39 +12145,6 @@ Transform:
   - {fileID: 91997571}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
---- !u!114 &841949470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841949465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c3308205a5cd445a04bf90ad3864eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tron
-  speed: 6
-  returningSpeed: 2
-  mode: 2
-  timeWait: 3
-  initialPosition: {fileID: 841949469}
-  positionToGo: {fileID: 0}
-  nextPositionToGo: {fileID: 0}
-  actualRotation: {x: 0, y: 0, z: 1}
-  nextRotation: {x: 0, y: 0, z: 0}
-  initialPositionsToGo:
-  - {fileID: 1393662353}
-  initialRotations:
-  - {x: 0, y: 0, z: -1}
-  positionsWents: []
-  rotationsDone: []
-  player: {fileID: 387211537}
-  playerRB: {fileID: 387211538}
-  rotationProgress: 0
-  rotationSpeed: 3
-  returningRotationSpeed: 0
-  wanderChangeInterval: 1.5
 --- !u!114 &841949471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12222,6 +12189,41 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &841949474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841949465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b8724ca8cfcd7b4eb92fbe7dd8db008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Daemon
+  speed: 6
+  returningSpeed: 6
+  timeWait: 2
+  initialPosition: {fileID: 934616087}
+  positionToGo: {fileID: 0}
+  nextPositionToGo: {fileID: 0}
+  actualRotation: {x: 1, y: 0, z: 0}
+  nextRotation: {x: 0, y: 0, z: 0}
+  initialPositionsToGo:
+  - {fileID: 547043074}
+  initialRotations:
+  - {x: 1, y: 0, z: 0}
+  positionsWents: []
+  rotationsDone: []
+  player: {fileID: 0}
+  playerRB: {fileID: 0}
+  rotationProgress: 0
+  rotationSpeed: 2
+  returningRotationSpeed: 0
+  speedRandom1: 4
+  speedRandom2: 6
+  speedRandom3: 8
+  wanderSpeed: 2
 --- !u!1 &843443129
 GameObject:
   m_ObjectHideFlags: 0
@@ -21487,7 +21489,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1627445954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22585,7 +22587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1717968892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22617,7 +22619,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tron
   speed: 6
   returningSpeed: 2
-  mode: 2
   timeWait: 3
   initialPosition: {fileID: 1730731941}
   positionToGo: {fileID: 0}
@@ -22635,7 +22636,6 @@ MonoBehaviour:
   rotationProgress: 0
   rotationSpeed: 1
   returningRotationSpeed: 0
-  wanderChangeInterval: 1.5
 --- !u!54 &1717968894
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -22789,6 +22789,7 @@ MonoBehaviour:
   UILose: {fileID: 1581723755}
   timeToShow: 3
   enemyManager: {fileID: 0}
+  controller: {fileID: 0}
 --- !u!4 &1718151642
 Transform:
   m_ObjectHideFlags: 0

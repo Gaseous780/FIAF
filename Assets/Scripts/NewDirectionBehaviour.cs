@@ -17,5 +17,9 @@ public class NewDirectionBehaviour : MonoBehaviour
         {
             other.GetComponent<Ghost>().ReciveNextOnes(newPosition, newDirection);
         }
+        else if (other.CompareTag("Daemon") == true)
+        {
+            other.GetComponent<Daemon>().NewDirection(newPosition, newDirection);
+        }
     }
 }

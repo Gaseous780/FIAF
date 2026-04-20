@@ -18,9 +18,9 @@ public class Tron : EnemyBase
         base.Move();
     }
 
-    public override void Iddle()
+    public override void Idle()
     {
-        base.Iddle();
+        base.Idle();
     }
 
     public override void StartWait()
