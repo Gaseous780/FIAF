@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ghost : MonoBehaviour
+public class Ghost : MonoBehaviour, IEnemyBasics
 {
     private FSMClass fsm;
 
     private LineOfSightBehaviour los;
 
-    private GameObject player;
+    [SerializeField] private GameObject player;
 
     private bool hasSeen;
     private SteeringBehaviours steering;
@@ -29,6 +29,10 @@ public class Ghost : MonoBehaviour
     private Vector3 actualRotation;
     private float rotationProgress;
 
+    private bool recentlySeen;
+    [SerializeField] private float timeHiding;
+    private MeshRenderer render;
+
     [SerializeField] private List<Transform> positionsWents;
     [SerializeField] private List<Vector3> rotationsDone;
 
@@ -44,10 +48,12 @@ public class Ghost : MonoBehaviour
     private void Awake()
     {
         hasSeen = false;
+        recentlySeen = false;
 
         steering = new SteeringBehaviours();
         fsm = new FSMClass();
         los = GetComponent<LineOfSightBehaviour>();
+        render = GetComponent<MeshRenderer>();
 
         fsm.InitializeFSM();
 
@@ -113,7 +119,6 @@ public class Ghost : MonoBehaviour
     public void ArriveMovement()
     {
         speed = defaultSpeed * steering.Arrive(transform, player.transform.position, 8f);
-        Debug.Log(speed);
         Move();
     }
 
@@ -125,12 +130,28 @@ public class Ghost : MonoBehaviour
 
     public void Hide()
     {
-
+        if (recentlySeen == true)
+        {
+            StartCoroutine(HideTemporaly());
+        }
     }
 
     public void Disapear()
     {
+        render.enabled = false;
+        speed = defaultSpeed;
 
+        hasSeen = false;
+        recentlySeen = false;
+        canChangeDirection = false;
+        changeRotation = false;
+        rotationProgress = 0;
+        isChecking = false;
+
+        positionsWents = new List<Transform>();
+        rotationsDone = new List<Vector3>();
+
+        this.enabled = false;
     }
 
     public virtual void Move()
@@ -248,7 +269,7 @@ public class Ghost : MonoBehaviour
         return false;
     }
 
-    protected virtual void DefineInitialGo()
+    public virtual void DefineInitialGo()
     {
         int directionToGo = Random.Range(0, initialPositionsToGo.Count);
 
@@ -314,5 +335,40 @@ public class Ghost : MonoBehaviour
                     break;
             }
         }
+    }
+
+    private void OnBecameVisible()
+    {
+        if (hasSeen == false && player.GetComponent<PlayerBehaviour>()._isOnCameras == true)
+        {
+            Debug.Log("Visible");
+            hasSeen = true;
+            recentlySeen = true;
+        }
+    }
+
+    private void OnBecameInvisible()
+    {
+        
+    }
+
+    private IEnumerator HideTemporaly()
+    {
+        recentlySeen = false;
+        render.enabled = false;
+
+        if (positionsWents.Count > 0)
+        {
+            transform.position = positionsWents[positionsWents.Count - 1].position;
+            actualRotation = rotationsDone[rotationsDone.Count - 1];
+
+            changeRotation = true;
+            ConvertForwardToDirection(actualRotation);
+        }
+
+        yield return new WaitForSeconds(timeHiding);
+
+        hasSeen = false;
+        render.enabled = true;
     }
 }

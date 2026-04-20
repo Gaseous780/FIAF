@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyBase : MonoBehaviour
+public abstract class EnemyBase : MonoBehaviour, IEnemyBasics
 {
     [SerializeField] protected int speed;
     [SerializeField] protected int returningSpeed;
@@ -185,6 +185,7 @@ public abstract class EnemyBase : MonoBehaviour
         if (nextPointIsReturn == true)
         {
             context._isOn = false;
+            this.enabled = false;
             return;
         }
 
@@ -241,7 +242,7 @@ public abstract class EnemyBase : MonoBehaviour
         return false;
     }
 
-    protected virtual void DefineInitialGo()
+    public virtual void DefineInitialGo()
     {
         int directionToGo = Random.Range(0, initialPositionsToGo.Count);
 

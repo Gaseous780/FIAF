@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,8 +9,11 @@ public class GameManager : MonoBehaviour
 
     private GameObject player;
 
+    private SceneController sceneController;
+
     public UIController _uiController => uiController;
     public GameObject _player => player;
+    public SceneController _sceneaController => sceneController;
 
     private void Awake()
     {
@@ -27,10 +31,18 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        sceneController = GetComponentInChildren<SceneController>();
+
         FindReferences();
     }
 
     public void FindReferences()
+    {
+        uiController = GameObject.FindAnyObjectByType<UIController>();
+        player = GameObject.FindAnyObjectByType<PlayerController>().gameObject;
+    }
+
+    public void FindReferences(Scene scene, LoadSceneMode mode)
     {
         uiController = GameObject.FindAnyObjectByType<UIController>();
         player = GameObject.FindAnyObjectByType<PlayerController>().gameObject;
