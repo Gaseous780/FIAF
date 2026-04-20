@@ -36,6 +36,8 @@ public class Daemon : EnemyBase
         context = new EnemyContext { _isOn = true, _LOS = LOS, _selfTransform = transform, _returnToOrigin = false, _decisionMoment = false, _isWander = true};
 
         DefineInitialGo();
+
+        this.enabled = false;
     }
 
     protected override void Update()

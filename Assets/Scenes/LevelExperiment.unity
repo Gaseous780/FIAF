@@ -21489,7 +21489,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1627445954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22587,7 +22587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1717968892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22767,6 +22767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1718151642}
   - component: {fileID: 1718151641}
+  - component: {fileID: 1718151643}
   m_Layer: 0
   m_Name: Conditions
   m_TagString: Untagged
@@ -22788,8 +22789,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ConditionsManager
   UILose: {fileID: 1581723755}
   timeToShow: 3
-  enemyManager: {fileID: 0}
-  controller: {fileID: 0}
+  enemyManager: {fileID: 1718151643}
+  controller: {fileID: 24404109}
 --- !u!4 &1718151642
 Transform:
   m_ObjectHideFlags: 0
@@ -22805,6 +22806,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1718151643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718151640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5575bc5e74cc5441b7c4c9183489a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyManager
+  enemies:
+  - {fileID: 1717968891}
+  - {fileID: 1627445953}
+  - {fileID: 841949465}
+  maxTimeToActivate: 120
+  minTimeToActivate: 60
 --- !u!1 &1719136695
 GameObject:
   m_ObjectHideFlags: 0

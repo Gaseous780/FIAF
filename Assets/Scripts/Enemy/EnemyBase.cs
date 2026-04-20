@@ -66,6 +66,8 @@ public abstract class EnemyBase : MonoBehaviour, IEnemyBasics
 
         tree = new EnemyTree();
         tree.InitializeNodes();
+
+        this.enabled = false;
     }
 
     protected virtual void Update()

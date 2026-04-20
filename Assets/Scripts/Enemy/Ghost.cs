@@ -74,14 +74,7 @@ public class Ghost : MonoBehaviour, IEnemyBasics
     {
         DefineInitialGo();
 
-        StartCoroutine(GetPlayer());
-    }
-
-    private IEnumerator GetPlayer()
-    {
-        yield return new WaitForSeconds(0.3f);
-
-        player = GameManager.manager._player;
+        this.enabled = false;
     }
 
     private void Update()
