@@ -70,6 +70,7 @@ public class ConditionsManager : MonoBehaviour
             ActivateWinCondition();
         }
 
+        StartCoroutine(RunTime());
     }
 
     private IEnumerator EnableUI()

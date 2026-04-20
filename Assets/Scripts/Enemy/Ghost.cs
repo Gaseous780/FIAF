@@ -334,7 +334,6 @@ public class Ghost : MonoBehaviour, IEnemyBasics
     {
         if (hasSeen == false && player.GetComponent<PlayerBehaviour>()._isOnCameras == true)
         {
-            Debug.Log("Visible");
             hasSeen = true;
             recentlySeen = true;
         }

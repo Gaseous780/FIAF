@@ -115,7 +115,15 @@ public abstract class EnemyBase : MonoBehaviour, IEnemyBasics
             yield return null;
         }
 
-        isWaiting = false;
+        if (context._isWander == true)
+        {
+            context._isWander = false;
+        }
+        else
+        {
+            context._isWander = true;
+        }
+            isWaiting = false;
     }
 
     public virtual void NewDirection(Transform newDirectionToGo, Vector3 newRotation)
