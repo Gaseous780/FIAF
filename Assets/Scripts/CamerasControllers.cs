@@ -12,8 +12,9 @@ public class CamerasControllers : MonoBehaviour, IPointerEnterHandler
 
     private bool camerasOff;
 
-    private UIController uiController;
-    private GameObject player;
+    [SerializeField]private UIController uiController;
+    [SerializeField]private GameObject player;
+    private EnergyBehaviour energyBehaviour;
 
     public bool _camerasOff => camerasOff;
 
@@ -27,8 +28,7 @@ public class CamerasControllers : MonoBehaviour, IPointerEnterHandler
 
     private void Start()
     {
-        uiController = GameManager.manager._uiController;
-        player = GameManager.manager._player;
+        energyBehaviour = player.GetComponent<PlayerBehaviour>()._energy;
     }
 
     public void SwitchToCamera(int cameraTo)
@@ -38,27 +38,40 @@ public class CamerasControllers : MonoBehaviour, IPointerEnterHandler
         activeCamera = camerasOn[cameraTo];
     }
 
-    public void OnPointerEnter(PointerEventData eventData) 
+    private void Update()
     {
-        if (camerasOff == true) 
-        { 
-            camerasOff = false;
-
-            activeCamera.gameObject.SetActive(true);
-            mainCamera.gameObject.SetActive(false);
-            uiController.ActivateUICamera();
-            player.GetComponent <PlayerBehaviour>()._isOnCameras = true;
-            player.GetComponent <PlayerInput>().enabled = false;
-        }
-        else
+        if(energyBehaviour._currentEnergy < 1)
         {
-            camerasOff = true;
+            BackToWolrd();
+        }
+    }
 
-            mainCamera.gameObject.SetActive(true);
-            activeCamera.gameObject.SetActive(false);
-            uiController.ActivateUIOffice();
-            player.GetComponent <PlayerBehaviour>()._isOnCameras = false;
-            player.GetComponent<PlayerInput>().enabled = true;
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (energyBehaviour._currentEnergy > 0)
+        {
+            if (camerasOff == true)
+            {
+                camerasOff = false;
+
+                activeCamera.gameObject.SetActive(true);
+                mainCamera.gameObject.SetActive(false);
+                uiController.ActivateUICamera();
+                player.GetComponent<PlayerBehaviour>()._isOnCameras = true;
+                energyBehaviour.IncreaseUsesOfEnergy();
+                player.GetComponent<PlayerInput>().enabled = false;
+            }
+            else
+            {
+                camerasOff = true;
+
+                mainCamera.gameObject.SetActive(true);
+                activeCamera.gameObject.SetActive(false);
+                uiController.ActivateUIOffice();
+                player.GetComponent<PlayerBehaviour>()._isOnCameras = false;
+                energyBehaviour.DecreaseUsesOfEnergy();
+                player.GetComponent<PlayerInput>().enabled = true;
+            }
         }
     }
 

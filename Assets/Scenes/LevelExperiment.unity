@@ -351,6 +351,8 @@ MonoBehaviour:
   - {fileID: 1997471069}
   - {fileID: 679720308}
   - {fileID: 1088951047}
+  uiController: {fileID: 1739040798}
+  player: {fileID: 387211534}
 --- !u!1 &31377479
 GameObject:
   m_ObjectHideFlags: 0
@@ -5639,6 +5641,7 @@ MonoBehaviour:
   minPositionOnY: 0.4323
   maxPositionOnY: 1.6184
   speedOfDoors: 0.2
+  player: {fileID: 387211534}
 --- !u!65 &424735388
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9213,6 +9216,7 @@ MonoBehaviour:
   minPositionOnY: 0.4323
   maxPositionOnY: 1.693089
   speedOfDoors: 0.2
+  player: {fileID: 387211534}
 --- !u!4 &700780970
 Transform:
   m_ObjectHideFlags: 0
@@ -10224,6 +10228,7 @@ MonoBehaviour:
   minPositionOnY: 0.4323
   maxPositionOnY: 1.693089
   speedOfDoors: 0.2
+  player: {fileID: 387211534}
 --- !u!4 &741905469
 Transform:
   m_ObjectHideFlags: 0
@@ -13731,6 +13736,7 @@ MonoBehaviour:
   minPositionOnY: 0.4323
   maxPositionOnY: 1.693089
   speedOfDoors: 0.2
+  player: {fileID: 387211534}
 --- !u!65 &942374381
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22268,6 +22274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d4061249be4b924086a302a96fa467a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  uiController: {fileID: 1739040798}
 --- !u!4 &1691694598
 Transform:
   m_ObjectHideFlags: 0
@@ -26514,6 +26521,7 @@ MonoBehaviour:
   minPositionOnY: 0.4323
   maxPositionOnY: 1.693089
   speedOfDoors: 0.2
+  player: {fileID: 387211534}
 --- !u!4 &1988652000
 Transform:
   m_ObjectHideFlags: 0
@@ -28300,6 +28308,7 @@ MonoBehaviour:
   minPositionOnY: 0.4323
   maxPositionOnY: 1.693089
   speedOfDoors: 0.2
+  player: {fileID: 387211534}
 --- !u!4 &2065801756
 Transform:
   m_ObjectHideFlags: 0

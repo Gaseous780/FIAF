@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager manager;
 
-    private UIController uiController;
+    [SerializeField] private UIController uiController;
 
     private GameObject player;
 

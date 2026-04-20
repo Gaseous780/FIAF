@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class DoorBehaviour : MonoBehaviour
@@ -15,6 +16,9 @@ public class DoorBehaviour : MonoBehaviour
 
     private float progresDoorStatus;
 
+    [SerializeField] private GameObject player;
+    private EnergyBehaviour playerEnergy;
+
     private void Awake()
     {
         maxPositionOnY = doorModelCore.transform.position.y;
@@ -23,18 +27,28 @@ public class DoorBehaviour : MonoBehaviour
         progresDoorStatus = 0;
     }
 
+    private void Start()
+    {
+        playerEnergy = player.GetComponent<EnergyBehaviour>();
+    }
+
     public void InteractDoor()
     {
-        if (isOpenDoor == true)
+        if (playerEnergy._currentEnergy > 0)
         {
-            isOpenDoor = false;
-        }
-        else
-        {
-            isOpenDoor= true;
-        }
+            if (isOpenDoor == true)
+            {
+                isOpenDoor = false;
+                playerEnergy.DecreaseUsesOfEnergy();
+            }
+            else
+            {
+                isOpenDoor = true;
+                playerEnergy.IncreaseUsesOfEnergy();
+            }
 
-        closeDoor = true;
+            closeDoor = true;
+        }
     }
 
     public void MovementDoor()
@@ -53,6 +67,12 @@ public class DoorBehaviour : MonoBehaviour
 
     private void Update()
     {
+        if (playerEnergy._currentEnergy < 1)
+        {
+            isOpenDoor = true;
+            closeDoor = true;
+        }
+
         if (closeDoor == true)
         {
             MovementDoor();
