@@ -200,6 +200,7 @@ public abstract class EnemyBase : MonoBehaviour
             actualRotation = -rotationsDone[rotationsDone.Count - 1];
             positionsWents.RemoveAt(positionsWents.Count - 1);
             rotationsDone.RemoveAt(rotationsDone.Count - 1);
+
             if (positionsWents.Count > 0)
             {
                 nextPositionToGo = positionsWents[positionsWents.Count - 1];

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class CamerasControllers : MonoBehaviour, IPointerEnterHandler
 {
@@ -11,12 +12,21 @@ public class CamerasControllers : MonoBehaviour, IPointerEnterHandler
 
     private bool camerasOff;
 
+    private UIController uiController;
+    private GameObject player;
+
     private void Awake()
     {
         camerasOff = true;
 
         mainCamera = Camera.main;
         activeCamera = camerasOn[0];
+    }
+
+    private void Start()
+    {
+        uiController = GameManager.manager._uiController;
+        player = GameManager.manager._player;
     }
 
     public void SwitchToCamera(int cameraTo)
@@ -34,8 +44,9 @@ public class CamerasControllers : MonoBehaviour, IPointerEnterHandler
 
             activeCamera.gameObject.SetActive(true);
             mainCamera.gameObject.SetActive(false);
-            GameManager.manager._uiController.ActivateUICamera();
-            GameManager.manager._player.SetActive(false);
+            uiController.ActivateUICamera();
+            player.GetComponent <PlayerBehaviour>()._isOnCameras = true;
+            player.GetComponent <PlayerInput>().enabled = false;
         }
         else
         {
@@ -43,8 +54,9 @@ public class CamerasControllers : MonoBehaviour, IPointerEnterHandler
 
             mainCamera.gameObject.SetActive(true);
             activeCamera.gameObject.SetActive(false);
-            GameManager.manager._uiController.ActivateUIOffice();
-            GameManager.manager._player.SetActive(true);
+            uiController.ActivateUIOffice();
+            player.GetComponent <PlayerBehaviour>()._isOnCameras = false;
+            player.GetComponent<PlayerInput>().enabled = true;
         }
     }
 }
