@@ -41,7 +41,7 @@ public class DoorBehaviour : MonoBehaviour
                 isOpenDoor = false;
                 playerEnergy.IncreaseUsesOfEnergy();
             }
-            else
+            else if (isOpenDoor == false)
             {
                 isOpenDoor = true;
                 playerEnergy.DecreaseUsesOfEnergy();

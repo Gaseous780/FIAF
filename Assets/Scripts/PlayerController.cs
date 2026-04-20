@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started)
         {
+            
             RaycastHit raycast;
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue(), distance));
 
