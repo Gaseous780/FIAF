@@ -31292,7 +31292,8 @@ MeshRenderer:
   m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: -5824100125325499298, guid: cae6895d5a675fc4680a411fbfe07440, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
