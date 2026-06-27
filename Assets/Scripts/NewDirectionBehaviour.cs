@@ -7,6 +7,17 @@ public class NewDirectionBehaviour : MonoBehaviour
     [SerializeField] private List <Transform> newPosition;
     [SerializeField] private List <Vector3> newDirection;
 
+    [SerializeField] private List<Node> neightbourdsToTransfer;
+
+    private Node thisNode;
+
+    public Node _thisNode => thisNode;
+
+    private void Start()
+    {
+        thisNode = new Node(neightbourdsToTransfer);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy") == true)

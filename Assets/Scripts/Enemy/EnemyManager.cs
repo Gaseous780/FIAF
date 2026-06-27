@@ -13,12 +13,6 @@ public class EnemyManager : MonoBehaviour
         StartCoroutine(TimeToInitEnemy());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private IEnumerator TimeToInitEnemy()
     {
         float timeToEnable = Random.Range(minTimeToActivate, maxTimeToActivate);
