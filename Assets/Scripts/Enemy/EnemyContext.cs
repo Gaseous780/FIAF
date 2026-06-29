@@ -10,6 +10,8 @@ public class EnemyContext
     private bool decisionMoment;
     private LineOfSightBehaviour LOS;
     private Vector3 [] directionToGo;
+    private bool hasThinkMove;
+    private bool hasBreakDoor;
 
     public Transform _selfTransform { get { return selfTransform; } set { selfTransform = value; } }
     public Transform _playerTransform { get {return playerTransform; } set { playerTransform = value; } }
@@ -19,4 +21,7 @@ public class EnemyContext
     public Vector3 [] _directionToGo { get { return directionToGo; } set { directionToGo = value; } }
     public bool _isWander { get { return isWander; } set { isWander = value; } }
     public bool _decisionMoment {  get { return decisionMoment; } set { decisionMoment = value; } }
+
+    public bool _hasThinkMove { get => hasThinkMove; set => hasThinkMove = value; }
+    public bool _hasBreakDoor { get => hasBreakDoor; set => hasBreakDoor = value; }
 }

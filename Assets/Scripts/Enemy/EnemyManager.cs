@@ -8,6 +8,15 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float maxTimeToActivate;
     [SerializeField] private float minTimeToActivate;
 
+    private PathFindingCreator pathCreator;
+
+    public PathFindingCreator _pathCreator => pathCreator;
+
+    private void Awake()
+    {
+        pathCreator = new PathFindingCreator();
+    }
+
     void Start()
     {
         StartCoroutine(TimeToInitEnemy());

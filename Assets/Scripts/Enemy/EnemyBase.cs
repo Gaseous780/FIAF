@@ -310,4 +310,10 @@ public abstract class EnemyBase : MonoBehaviour, IEnemyBasics
     public virtual void MoveRandom2() { }
 
     public virtual void MoveRandom3() { }
+
+    public virtual void DestroyDoor() { }
+
+    public virtual void SetMode() { }
+
+    public virtual void SetPath () { }
 }
