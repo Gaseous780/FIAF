@@ -17,7 +17,7 @@ public class NewDirectionBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        thisNode = new Node(transform.position,gameObject.name, isShortcut);
+        thisNode = new Node(transform.position,gameObject.name, gameObject,isShortcut);
         neightbourdsToTransfer = new List<Node>();
     }
 

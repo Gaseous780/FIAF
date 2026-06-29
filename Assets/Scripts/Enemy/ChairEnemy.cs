@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class ChairEnemy : EnemyBase
 
     private SteeringBehaviours steeringBehaviours;
 
-    [SerializeField] private List<Vector3> positionsToGo;
+    [SerializeField] private List<Node> positionsToGo;
 
     //private float rotationProgress;
     //[SerializeField] private float rotationSpeed;
@@ -20,6 +21,12 @@ public class ChairEnemy : EnemyBase
 
     [SerializeField]private NewDirectionBehaviour firstNode;
 
+    [SerializeField] private float timeToReactivate = 5f;
+
+    [SerializeField] private GameObject[] models; 
+
+    private bool processing;
+
     public NewDirectionBehaviour _firstNode { get => firstNode; set => firstNode = value; }
     public Node _actualNode { get => actualNode; set => actualNode = value; }
 
@@ -29,10 +36,15 @@ public class ChairEnemy : EnemyBase
         LOS = GetComponent<LineOfSightBehaviour>();
         rotationProgress = 0;
 
-        context = new EnemyContext() { _isOn = true, _LOS = LOS, _selfTransform = transform, _returnToOrigin = false, _decisionMoment = false, _isWander = true, _hasBreakDoor = false, _hasThinkMove = false };
+        processing = false;
+
+        context = new EnemyContext() { _isOn = true, _LOS = LOS, _selfTransform = transform, _returnToOrigin = false, _decisionMoment = false, _isWander = true, _hasBreakDoor = false, _hasThinkMove = false, _mustReturn = false };
 
         bossTree = new BossTree();
         bossTree.InitializeNodes();
+
+        models[0].SetActive(true);
+        models[1].SetActive(false);
     }
 
     void Start()
@@ -48,18 +60,22 @@ public class ChairEnemy : EnemyBase
 
     public override void Move()
     {
-        //Debug.Log(positionsToGo.Count);
+        if (positionsToGo.Count <= 0) { return; }
+
         if (changeRotation == false)
         {
-            Vector3 direction = steeringBehaviours.Seek(transform, positionsToGo[0]);
+            Vector3 direction = steeringBehaviours.Seek(transform, positionsToGo[0]._position);
             transform.position += direction * speed * Time.deltaTime;
 
-            if (Vector3.Distance(transform.position, positionsToGo[0]) < 1)
+            if (Vector3.Distance(transform.position, positionsToGo[0]._position) < 1)
             {
-                rotationProgress = 0;
-                actualRotation = transform.forward;
-                nextRotation = steeringBehaviours.Seek(transform, positionsToGo[1]);
-                changeRotation = true;
+                if (positionsToGo.Count >= 2)
+                {
+                    rotationProgress = 0;
+                    actualRotation = transform.forward;
+                    nextRotation = steeringBehaviours.Seek(transform, positionsToGo[1]._position);
+                    changeRotation = true;
+                }
             }
         }
         else
@@ -70,7 +86,7 @@ public class ChairEnemy : EnemyBase
 
     public override void SetPath()
     {
-        positionsToGo = manager._pathCreator.SetPathTheta(actualNode);
+        positionsToGo = manager._pathCreator.SetPathTheta(actualNode, firstNode._thisNode);
         context._hasThinkMove = true;
     }
 
@@ -90,48 +106,86 @@ public class ChairEnemy : EnemyBase
 
     public override void DestroyDoor()
     {
-        Debug.Log("Destroy");
+        if (processing == false)
+        {
+            processing = true;
+
+            positionsToGo[1]._gameObjectToDisable.SetActive(false);
+
+            StartCoroutine(ReActivateGameObject(positionsToGo[1]._gameObjectToDisable));
+
+            SetPath();
+
+            context._hasBreakDoor = true;
+        }
+    }
+
+    private IEnumerator ReActivateGameObject (GameObject gameObject)
+    {
+        yield return new WaitForSeconds (timeToReactivate);
+
+        gameObject.SetActive (true);
     }
 
     public override void SetMode()
     {
-        Debug.Log("Set");
+        Debug.Log("Pase");
+
+        models[0].SetActive(false);
+        models[1].SetActive(true);
+
+        speed *= 2;
+        rotationSpeed *= 2;
+
+        RaycastHit hit;
+        Physics.Raycast(transform.position, transform.forward, out hit, transform.forward.magnitude, LayerMask.GetMask("Water"));
+        hit.collider.gameObject.SetActive(false);
+
+        context._hasBreakDoor = false;
+        StartCoroutine(ReActivateGameObject(hit.collider.gameObject));
+        processing = false;
+        context._returnToOrigin = true;
     }
 
     public override void ReturnToPositionOrigin()
     {
-        Debug.Log("Return");
+        if (positionsToGo.Count <= 0) 
+        {
+            context._isOn = false;
+            speed /= 2;
+            rotationSpeed /= 2;
+            context._hasThinkMove = false;
+            context._mustReturn = false;
+
+            StartCoroutine(ReActivate());
+
+            return;
+        }
+        Move();
     }
 
-    //private void Move()
-    //{
-    //    if (positionToGo.Count <= 0) { return; }
+    public override void SetReturnToPositionOrigin()
+    {
+        positionsToGo = manager._pathCreator.SetPathAStar(actualNode);
 
-    //    Vector3 direction = steeringBehaviours.Seek(transform, positionToGo[0].position);
-    //    transform.position += direction * speed * Time.deltaTime;
+        context._mustReturn = true;
+        processing = false;
+        context._hasBreakDoor = false;
+        context._returnToOrigin = false;
 
-    //    if (Vector3.Distance(transform.position, positionToGo[0].position) > 4)
-    //    {
-    //        rotationProgress = 0;
-    //        previousRotaion = transform.forward;
-    //        toRotate = steeringBehaviours.Seek(transform, positionToGo[1].position);
-    //    }
-    //    else
-    //    {
-    //        Rotation();
-    //    }
+        models[0].SetActive(true);
+        models[1].SetActive(false);
+    }
 
-    //    if (Vector3.Distance(transform.position, positionToGo[0].position) < 1)
-    //    {
-    //        positionToGo.RemoveAt(0);
-    //    }
-    //}
+    private IEnumerator ReActivate()
+    {
+        yield return new WaitForSeconds(30);
 
-    //private void Rotation()
-    //{
-    //    if (rotationProgress > 0.99f) { return; }
+        context._isOn = true;
+    }
 
-    //    transform.forward = Vector3.Lerp(previousRotaion, toRotate, rotationProgress);
-    //    rotationProgress += rotationSpeed * Time.deltaTime;
-    //}
+    public override void Idle()
+    {
+        
+    }
 }

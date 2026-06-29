@@ -3,21 +3,27 @@ using UnityEngine;
 
 public class PathFindingCreator
 {
+    private Node startNode;
     private Node endNode;
 
     private ThetaStar theta;
 
+    private AStar aStar;
+
     public PathFindingCreator(Node endNode = null)
     {
         theta = new ThetaStar();
+        aStar = new AStar();
         if (endNode != null)
         {
             this.endNode = endNode;
         }
     }
 
-    public List <Vector3> SetPathTheta(Node initNode)
+    public List <Node> SetPathTheta(Node initNode, Node startNode)
     {
+        this.startNode = startNode;
+
         List<Node> path = theta.Run(initNode, ReachEndPoint, GetCosts, HasAShortcut, HasLineOfSight);
     
         List <Vector3> points = new List<Vector3>();
@@ -27,12 +33,35 @@ public class PathFindingCreator
             points.Add(path[i]._position);
         }
     
-        return points;
+        return path;
+    }
+
+    public List <Node> SetPathAStar(Node initNode)
+    {
+        List<Node> path = aStar.Run(initNode, ReachOrigin, GetCosts, HasAShortcut);
+        List<Vector3> points = new List<Vector3>();
+
+        for (int i = 0; i < path.Count; i++)
+        {
+            points.Add(path[i]._position);
+        }
+
+        return path;
     }
 
     private bool ReachEndPoint(Node nodeToCompare)
     {
         if (nodeToCompare == endNode)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool ReachOrigin (Node nodeToCompare)
+    {
+        if (nodeToCompare == startNode)
         {
             return true;
         }
@@ -67,9 +96,4 @@ public class PathFindingCreator
 
         return !Physics.Raycast(startPosition, endPosition, distance, LayerMask.GetMask ("Default"));
     }
-
-    //public List<Node> GetConnections(Node node)
-    //{
-    //    return node._neightbourds;
-    //}
 }

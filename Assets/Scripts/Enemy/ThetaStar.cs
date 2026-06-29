@@ -17,13 +17,8 @@ public class ThetaStar
 
         pending.Enqueue(initialNode, 0);
 
-        //int counter = 0;
-
         while (!pending.IsEmpty)
         {
-            //counter++;
-            //if (counter > watchDog) break;
-
             Node node = pending.Dequeue();
             if (visited.Contains(node))
             {
@@ -32,29 +27,20 @@ public class ThetaStar
 
             visited.Add(node);
 
-            Debug.Log(node._name);
-
             if (isSatisfied(node))
             {
                 List<Node> path = new List<Node>();
                 path.Add(node);
                 Node current = node;
 
-                int t = 0;
                 while (parents.ContainsKey(current) && parents[current] != current)
                 {
                     path.Add(parents[current]);
                     current = parents[current];
-                    Debug.Log(parents[current]._name);
                 }
 
                 path.Reverse();
-                Debug.Log("Complete");
 
-                for (int i = 0; i < path.Count; i++)
-                {
-                    Debug.Log(path[i]._name);
-                }
                 return path;
             }
             else
@@ -86,7 +72,7 @@ public class ThetaStar
                         newParent = node;
                     }
 
-                    if (costs.ContainsKey(child) && currentCosts >= costs[child])
+                    if ((costs.ContainsKey(child) && currentCosts >= costs[child]))
                     {
                         continue;
                     }

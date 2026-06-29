@@ -27,6 +27,7 @@ public class EnemyTree
 
 public class BossTree
 {
+    private DecisionNode mustReturnNode;
     private DecisionNode rootNode;
     private DecisionNode moveOrNextNode;
     private DecisionNode isReturningNode;
@@ -35,18 +36,21 @@ public class BossTree
 
     public void InitializeNodes()
     {
-        ActionNode ReturnNode = new ActionNode(EnemyAction => EnemyAction.ReturnToPositionOrigin());
+        ActionNode SetReturnNode = new ActionNode(EnemyAction => EnemyAction.SetReturnToPositionOrigin());
         ActionNode MoveNode = new ActionNode(EnemyAction => EnemyAction.Move());
         ActionNode DestroyNode = new ActionNode(EnemyAction => EnemyAction.DestroyDoor());
         ActionNode SetModeNode = new ActionNode(EnemyAction => EnemyAction.SetMode());
         ActionNode SetMovementPath = new ActionNode(EnemyAction => EnemyAction.SetPath());
+        ActionNode ReturnNode = new ActionNode(EnemyAction => EnemyAction.ReturnToPositionOrigin());
+        ActionNode IdleNode = new ActionNode(EnemyAction => EnemyAction.Idle());
 
 
-        isReturningNode = new QuestionNode(context => context._returnToOrigin, ReturnNode, SetModeNode);
+        isReturningNode = new QuestionNode(context => context._returnToOrigin, SetReturnNode, SetModeNode);
         AngryDecisionNode = new QuestionNode (context => context._hasBreakDoor, isReturningNode, DestroyNode);
         moveOrNextNode = new QuestionNode(context => !context._LOS.IsOnFront(context._selfTransform), MoveNode, AngryDecisionNode);
         thinkNode = new QuestionNode (context => context._hasThinkMove, moveOrNextNode, SetMovementPath);
-        rootNode = new QuestionNode(context => context._isOn == true, thinkNode, default);
+        mustReturnNode = new QuestionNode (context => context._mustReturn, ReturnNode, thinkNode);
+        rootNode = new QuestionNode(context => context._isOn == true, mustReturnNode, IdleNode);
     }
 
     public void Evaluate(EnemyBase enemy, EnemyContext context)

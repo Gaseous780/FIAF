@@ -11,16 +11,21 @@ public class Node
 
     private bool shortcut;
 
+    private GameObject gameObjectToDisable;
+
     public Vector3 _position;
     public bool _shortcut;
     public string _name => name;
 
     public List<Node> _neightbourds { get => neightbourds; set => neightbourds = value; }
 
-    public Node (Vector3 position,string name, bool shortcut = false)
+    public GameObject _gameObjectToDisable => gameObjectToDisable;
+
+    public Node (Vector3 position,string name, GameObject gameObject,bool shortcut = false)
     {
         this._position = position;
         _shortcut = shortcut;
         this.name = name;
+        gameObjectToDisable = gameObject;
     }
 }
