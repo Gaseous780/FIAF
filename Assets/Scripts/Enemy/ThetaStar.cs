@@ -32,7 +32,7 @@ public class ThetaStar
 
             visited.Add(node);
 
-            Debug.Log("ThetaStar");
+            Debug.Log(node._name);
 
             if (isSatisfied(node))
             {
@@ -40,13 +40,21 @@ public class ThetaStar
                 path.Add(node);
                 Node current = node;
 
+                int t = 0;
                 while (parents.ContainsKey(current) && parents[current] != current)
                 {
                     path.Add(parents[current]);
                     current = parents[current];
+                    Debug.Log(parents[current]._name);
                 }
 
                 path.Reverse();
+                Debug.Log("Complete");
+
+                for (int i = 0; i < path.Count; i++)
+                {
+                    Debug.Log(path[i]._name);
+                }
                 return path;
             }
             else

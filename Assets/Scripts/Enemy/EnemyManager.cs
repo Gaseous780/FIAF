@@ -10,11 +10,13 @@ public class EnemyManager : MonoBehaviour
 
     private PathFindingCreator pathCreator;
 
+    [SerializeField] private NewDirectionBehaviour endNode;
+
     public PathFindingCreator _pathCreator => pathCreator;
 
     private void Awake()
     {
-        pathCreator = new PathFindingCreator();
+        pathCreator = new PathFindingCreator(endNode._thisNode);
     }
 
     void Start()

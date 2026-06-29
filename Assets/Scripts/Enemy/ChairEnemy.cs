@@ -18,9 +18,10 @@ public class ChairEnemy : EnemyBase
 
     private Node actualNode;
 
-    private Node firstNode;
+    [SerializeField]private NewDirectionBehaviour firstNode;
 
-    public Node _firstNode { get => firstNode; set => firstNode = value; }
+    public NewDirectionBehaviour _firstNode { get => firstNode; set => firstNode = value; }
+    public Node _actualNode { get => actualNode; set => actualNode = value; }
 
     protected override void Awake()
     {
@@ -36,7 +37,7 @@ public class ChairEnemy : EnemyBase
 
     void Start()
     {
-        
+        actualNode = firstNode._thisNode;
     }
 
     // Update is called once per frame
@@ -47,6 +48,7 @@ public class ChairEnemy : EnemyBase
 
     public override void Move()
     {
+        //Debug.Log(positionsToGo.Count);
         if (changeRotation == false)
         {
             Vector3 direction = steeringBehaviours.Seek(transform, positionsToGo[0]);

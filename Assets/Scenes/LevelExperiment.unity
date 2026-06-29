@@ -4678,7 +4678,8 @@ MonoBehaviour:
   - {fileID: 1360813839}
   newDirection:
   - {x: 0, y: 0, z: -1}
-  neightBourds: []
+  neightBourds:
+  - {fileID: 277682006}
   isShortcut: 0
 --- !u!65 &219431774
 BoxCollider:
@@ -6071,7 +6072,7 @@ MonoBehaviour:
   newDirection:
   - {x: 1, y: 0, z: 0}
   neightBourds:
-  - {fileID: 0}
+  - {fileID: 219431773}
   isShortcut: 0
 --- !u!65 &277682007
 BoxCollider:
@@ -18224,7 +18225,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewDirectionBehaviour
   newPosition: []
   newDirection: []
-  neightBourds: []
+  neightBourds:
+  - {fileID: 1523789110}
+  - {fileID: 1422180019}
   isShortcut: 0
 --- !u!1 &869854660
 GameObject:
@@ -26250,6 +26253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1304459432}
   - component: {fileID: 1304459433}
+  - component: {fileID: 1304459434}
   m_Layer: 0
   m_Name: Crayr
   m_TagString: Untagged
@@ -26285,8 +26289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f478a7ff644451458a3b35b43fd571e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChairEnemy
-  speed: 0
-  returningSpeed: 0
+  speed: 1
+  returningSpeed: 1
   timeWait: 0
   initialPosition: {fileID: 0}
   positionToGo: {fileID: 0}
@@ -26301,9 +26305,27 @@ MonoBehaviour:
   playerRB: {fileID: 0}
   rotationProgress: 0
   rotationSpeed: 3.26
-  returningRotationSpeed: 0
+  returningRotationSpeed: 1.21
   positionsToGo: []
-  manager: {fileID: 0}
+  manager: {fileID: 1718151643}
+  firstNode: {fileID: 287206203}
+--- !u!114 &1304459434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304459431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79f2b278c6683b84487614c56ac4ba90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LineOfSightBehaviour
+  distance: 33
+  angle: 90
+  doorsLayers:
+    serializedVersion: 2
+    m_Bits: 16
 --- !u!1 &1305342854
 GameObject:
   m_ObjectHideFlags: 0
@@ -33442,7 +33464,7 @@ MonoBehaviour:
   - {x: 1, y: 0, z: 0}
   neightBourds:
   - {fileID: 273148124}
-  - {fileID: 0}
+  - {fileID: 1774471467}
   isShortcut: 0
 --- !u!65 &1711535351
 BoxCollider:
@@ -33965,6 +33987,7 @@ MonoBehaviour:
   - {fileID: 841949465}
   maxTimeToActivate: 120
   minTimeToActivate: 60
+  endNode: {fileID: 848815191}
 --- !u!4 &1718317055 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c1b946642697dca4797ea6c9daf8c7ab, type: 3}

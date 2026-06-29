@@ -17,15 +17,18 @@ public class NewDirectionBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        foreach (NewDirectionBehaviour neightbour in neightBourds)
-        {
-            neightbourdsToTransfer.Add(neightbour.thisNode);
-        }
+        thisNode = new Node(transform.position,gameObject.name, isShortcut);
+        neightbourdsToTransfer = new List<Node>();
     }
 
     private void Start()
     {
-        thisNode = new Node(neightbourdsToTransfer, transform.position,isShortcut);
+        foreach (NewDirectionBehaviour neightbour in neightBourds)
+        {
+            neightbourdsToTransfer.Add(neightbour._thisNode);
+        }
+
+        thisNode._neightbourds = neightbourdsToTransfer;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,7 +36,7 @@ public class NewDirectionBehaviour : MonoBehaviour
 
         if (other.gameObject.GetComponent<ChairEnemy>() != null)
         {
-            other.gameObject.GetComponent<ChairEnemy>()._firstNode = thisNode;
+            other.gameObject.GetComponent<ChairEnemy>()._actualNode = thisNode;
         }
 
         if (newPosition.Count <= 0) { return; }

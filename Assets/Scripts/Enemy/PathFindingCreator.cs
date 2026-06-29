@@ -7,9 +7,13 @@ public class PathFindingCreator
 
     private ThetaStar theta;
 
-    public PathFindingCreator()
+    public PathFindingCreator(Node endNode = null)
     {
         theta = new ThetaStar();
+        if (endNode != null)
+        {
+            this.endNode = endNode;
+        }
     }
 
     public List <Vector3> SetPathTheta(Node initNode)
@@ -61,6 +65,11 @@ public class PathFindingCreator
         Vector3 direction = endPosition - startPosition;
         float distance = direction.magnitude;
 
-        return !Physics.Raycast(startPosition, endPosition, distance, LayerMask.GetMask ("Door"));
+        return !Physics.Raycast(startPosition, endPosition, distance, LayerMask.GetMask ("Default"));
     }
+
+    //public List<Node> GetConnections(Node node)
+    //{
+    //    return node._neightbourds;
+    //}
 }

@@ -7,16 +7,20 @@ public class Node
     private List<Node> neightbourds;
     private Vector3 position;
 
+    private string name;
+
     private bool shortcut;
 
-    public List <Node> _neightbourds => neightbourds;
     public Vector3 _position;
     public bool _shortcut;
+    public string _name => name;
 
-    public Node (List <Node> neightbourds, Vector3 position, bool shortcut = false)
+    public List<Node> _neightbourds { get => neightbourds; set => neightbourds = value; }
+
+    public Node (Vector3 position,string name, bool shortcut = false)
     {
-        this.neightbourds = neightbourds;
         this._position = position;
-        this._shortcut = shortcut;
+        _shortcut = shortcut;
+        this.name = name;
     }
 }
